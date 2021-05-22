@@ -1,4 +1,7 @@
 // Example Attack Tatic - reg save HKLM\SAM sam.hive || reg save HKLM\SYSTEM system.hive
+
+## Query
+
 DeviceProcessEvents
 | where Timestamp > ago(7d)
 | where FileName =~ 'reg.exe'
