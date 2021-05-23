@@ -1,0 +1,9 @@
+# Query
+
+```
+DeviceLogonEvents
+| where Protocol == "NTLM"
+| where ActionType == "LogonSuccess"
+| where LogonType == "Network"
+| project DeviceName, RemoteDeviceName, AccountName, Protocol, RemoteIPType
+```
