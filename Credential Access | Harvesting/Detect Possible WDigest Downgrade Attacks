@@ -1,0 +1,12 @@
+# Query
+
+```
+DeviceProcessEvents
+| where InitiatingProcessVersionInfoOriginalFileName has_any ("cmd.exe","powershell.exe")
+| where ProcessCommandLine contains "reg add HKLM"
+| where ProcessCommandLine contains "WDigest"
+| where ProcessCommandLine contains "UseLogonCredential"
+| where ProcessCommandLine  contains "1"
+| project Timestamp, DeviceName, AccountName
+
+```
