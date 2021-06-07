@@ -1,0 +1,7 @@
+// Detects possible malicious Powershell service created
+
+# Query
+
+DeviceProcessEvents
+| where InitiatingProcessVersionInfoOriginalFileName has_any ("powershell.exe", "cmd.exe", "wscript.exe", "cscript.exe")
+| where ProcessCommandLine has_any ("-BinaryPathName", "New-Service", "-StartupType") 
