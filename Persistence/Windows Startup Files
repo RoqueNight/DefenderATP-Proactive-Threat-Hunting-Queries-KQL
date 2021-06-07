@@ -1,0 +1,9 @@
+// Finds files in the Windows startup folder. Malicious files could execute when the system boots 
+
+# Query
+
+DeviceFileEvents  
+| where Timestamp > ago(7d)
+| where FolderPath has @"\Windows\Start Menu\Programs\Startup\"
+| project Timestamp, DeviceName, FolderPath, FileName 
+| top 100 by Timestamp
