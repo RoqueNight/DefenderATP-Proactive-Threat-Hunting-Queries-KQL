@@ -1,0 +1,7 @@
+// Scheduled Tasks to automate malicious payload execution 
+
+# Query
+
+DeviceProcessEvents 
+| where FolderPath endswith "\\schtasks.exe" and ProcessCommandLine has " /create " and AccountName != "system"
+| where Timestamp > ago(7d)
