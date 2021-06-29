@@ -1,0 +1,17 @@
+// Detects when any tool attempts to perform SMB enumeration against any asset.
+// Valuable for Servers such as Domain Controllers & File Shares
+// Also detects activity such as port scanning and third-party enumeration tools 
+// Alerts defender while the actor is still in his reconnaissance phase
+
+// RemoteIPCount value can be adjusted
+// Excludes the Defender ATP sensor 
+
+# Query
+
+DeviceNetworkEvents
+| where RemotePort == 445 
+    and InitiatingProcessId !in (0, 4)
+| summarize RemoteIPCount=dcount(RemoteIP) by DeviceName, InitiatingProcessFileName, InitiatingProcessId, InitiatingProcessCreationTime
+| where RemoteIPCount > 200
+| where InitiatingProcessFileName != "Microsoft.Tri.Sensor.exe"
+
