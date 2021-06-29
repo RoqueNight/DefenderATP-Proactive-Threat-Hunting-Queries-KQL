@@ -1,0 +1,10 @@
+// Detects when a suspicious auto-run registry key is created 
+
+# Query
+
+DeviceRegistryEvents 
+| where Timestamp > ago(7d)
+| where ActionType == "SetValue" 
+| where RegistryKey has @"Microsoft\Windows\CurrentVersion\RUN"
+| summarize ComputerCount=count(DeviceName), DeviceNames=makeset(DeviceName) by RegistryValueData
+| top 100 by ComputerCount
