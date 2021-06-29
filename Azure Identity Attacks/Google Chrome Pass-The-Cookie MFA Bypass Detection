@@ -1,0 +1,8 @@
+// Detects if the Chrome cookies are being tampered with 
+// Can be abused to bypass MFA if the session was validated with credentials + MFA
+
+# Query
+
+DeviceFileEvents
+| where FolderPath contains @"\AppData\Local\Google\Chrome\User Data\Default\"
+| where FileName has_any ("History", "Login Data", "Login Data For Account", "Cookies")
