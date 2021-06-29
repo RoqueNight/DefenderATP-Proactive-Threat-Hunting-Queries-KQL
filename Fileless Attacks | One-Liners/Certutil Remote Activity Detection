@@ -1,0 +1,10 @@
+// Detects when certutil.exe does a remote URL call to possibly download malicious files
+
+# Query
+
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName == "CertUtil.exe"
+| where ProcessCommandLine contains "/i" 
+   or ProcessCommandLine contains "-encode" 
+   or ProcessCommandLine contains "-decode"
+   or ProcessCommandLine contains "-urlcache"
