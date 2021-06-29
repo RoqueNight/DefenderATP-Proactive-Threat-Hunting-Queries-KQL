@@ -1,0 +1,7 @@
+// PRT (Primary Refresh Token) can be exfiltrated if the device in Intune joined and abused for Account Takeovers
+
+# Query
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "Dsregcmd.exe /status" 
+    or ProcessCommandLine contains "Sekurlsa::cloudap"
