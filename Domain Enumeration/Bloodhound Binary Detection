@@ -1,0 +1,7 @@
+// Detects with any basic bloodhound binaries are dropped on disk
+
+# Query
+
+DeviceFileEvents
+| where FileName has_any ("AzureHound.ps1", "SharpHound.exe", "SharpHound.ps1")
+| project Timestamp, DeviceName, FileName, ReportId, DeviceId
