@@ -1,0 +1,6 @@
+// Detects general PTC attempts on the network, agnostic
+// Searches for mimikatz.exe arguments related to Pass-The-Cookie attacks
+# Query
+
+DeviceProcessEvents
+| where ProcessCommandLine has_any ("dpapi", "/unprotect", "privilege::debug")
