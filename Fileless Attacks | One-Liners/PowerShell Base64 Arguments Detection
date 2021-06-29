@@ -1,0 +1,7 @@
+// Detects base64 encoded arguments in powershell
+
+# Query
+
+DeviceProcessEvents
+| where FileName in~ ("powershell.exe", "powershell_ise.exe")
+| where ProcessCommandLine has_any ("-enc", "-e", "[Convert]::ToBase64String", "-EncodedCommand")
