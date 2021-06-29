@@ -1,0 +1,6 @@
+// Detects when a Windows privilege escalation script is dropped on disk 
+
+# Query
+
+DeviceFileEvents
+| where FileName has_any ("winPEASx64.exe", "winPEASx86.exe", "winPEASany.exe", "winPEAS.bat", "Seatbelt.exe", "SharpUp.exe", "jaws-enum.ps1", "PowerUp.ps1", "PrivescCheck.ps1", "Sherlock.ps1")
