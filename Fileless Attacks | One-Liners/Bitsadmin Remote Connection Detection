@@ -1,0 +1,9 @@
+// Detects when bitsadmin.exe tries to do a remote URL call to possibly download a malicious file
+
+# Query
+
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+| where ProcessCommandLine contains "/addfile"
+    or ProcessCommandLine contains "/transfer"
+    or ProcessCommandLine contains "/download"
