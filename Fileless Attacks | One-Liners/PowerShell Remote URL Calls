@@ -1,0 +1,12 @@
+// Detects when powershell does a remote call to download possible malicious payloads
+// Ignore calls to localhost
+
+# Query
+
+DeviceProcessEvents
+| where Timestamp > ago(30d)
+| where FileName in~ ("powershell.exe", "powershell_ise.exe", "regsrv32.exe")
+| where ProcessCommandLine has_any ("Net.WebClient", "DownloadFile", "Invoke-WebRequest", "Invoke-Shellcode", "http", "IWR", "IEX", "Start-BitsTransfer", "Start-BitsTransfer", "mpcmdrun.exe")
+and ProcessCommandLine !contains "localhost" 
+and ProcessCommandLine !contains "127.0.0.1"
+and ProcessCommandLine !contains "169.254.169.254"
