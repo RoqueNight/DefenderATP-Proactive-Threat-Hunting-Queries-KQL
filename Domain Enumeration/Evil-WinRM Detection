@@ -1,0 +1,13 @@
+// Detects when a possible remote WinRM connection was made by using the evil-winrm tool from a remote host
+// Exclude common utilities that use Windows WinRM connections to narrow the query down to actionable suspicious traffic. Can be adjusted based on specific environment
+
+# Query
+
+DeviceNetworkEvents 
+| where RemotePort == 5985 or RemoteIP == "5986"
+| where RemoteIP !contains "127.0.0.1" 
+    and RemoteIP !contains "::1"
+    and InitiatingProcessCommandLine !contains "java"
+    and InitiatingProcessVersionInfoProductName !contains "PRTG Network Monitor"
+    and InitiatingProcessVersionInfoOriginalFileName  !contains "java.exe"
+    and InitiatingProcessCommandLine !contains "AdvisorAssessment.exe"
