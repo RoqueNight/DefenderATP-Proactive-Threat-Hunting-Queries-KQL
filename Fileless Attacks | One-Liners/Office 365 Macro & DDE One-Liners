@@ -1,0 +1,9 @@
+// Detects when Office 365 creates a subprocess to execute malicious code via suspicious arguments
+
+# Query
+
+DeviceProcessEvents
+| where InitiatingProcessFileName has_any ("excel.exe", "winword.exe", "teams.exe", "powerpnt.exe", "msaccess.exe", "mspub.exe", "onedrive.exe")
+| where FileName in~ ("regsvr32.exe", "rundll32.exe", "mshta.exe", "powershell.exe","powershell_ise.exe", "cmd.exe", "certutil.exe", "bitsadmin.exe", "wmic.exe", "cscript.exe", "wscript.exe", "msiexec", "msbuild.exe", "odbcconf.exe", "splwow64.exe")
+| where ProcessCommandLine has_any ("/i", "os", "-urlcache", "-e", "-enc", "-encoded","-encodedcommand", "-w", "-noP", "/transfer", "/download", "/c", "WebClient", "System.Net.Sockets", "IWR", "IEX", "Invoke-Expression","$env:comspec","vbscript", "powercat", "[Environment]::OSVersion", "-Value", "-Path", "Set-MpPreference", "uninstall", "System.Security.Cryptography", "DeflateStream", "IsInRole", "Start-Process", "ToBase64String")
+
