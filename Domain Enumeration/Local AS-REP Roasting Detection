@@ -1,0 +1,7 @@
+// Detects when a local command or tool is used to perform an AS-REP roasting attack
+
+# Query
+
+DeviceProcessEvents
+| where InitiatingProcessFileName has_any ("powershell_ise.exe", "powershell.exe")
+| where ProcessCommandLine has_any ("-PreauthNotRequired", "ConvertFrom-UACvalue", "Get-ASREPHash", "Invoke-ASREPRoast")
